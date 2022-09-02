@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 
 <!-- CHANGELOGGER -->
 
+## [v0.0.2] - 2022-09-02
+
+### Bug fix (1 change)
+
+- Add missing dependency requirement
+
+
 ## [v0.0.1] - 2022-09-02
 
 ### Other (1 change)
