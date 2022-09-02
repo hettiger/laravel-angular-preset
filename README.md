@@ -7,6 +7,8 @@
 
 Integrates Angular into a Laravel Application. Works on Laravel Vapor.
 
+> This package has not been properly tested yet. Feel free to give it a try. Please let me know when things go wrong.
+
 ## Installation
 
 You can install the package via composer:
