@@ -3,6 +3,7 @@
 namespace Hettiger\LaravelAngularPreset\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 
 class LaravelAngularPresetCommand extends Command
 {
@@ -61,12 +62,18 @@ class LaravelAngularPresetCommand extends Command
     {
         $this->info('Adding convenience Node / NPM scripts');
 
-        static::updateNodeScripts(fn (array $scripts) => array_merge($scripts, [
-            'ng:dev' => 'cd resources/angular && npm run build -- --configuration development && cd - && cp public/angular/index.html resources/views/angular.blade.php',
-            'ng:watch' => 'npm run ng:dev && cd resources/angular && npm run build -- --configuration development --watch',
-            'ng:prod' => 'cd resources/angular && npm run build && cd - && cp public/angular/index.html resources/views/angular.blade.php',
-            'ng:test' => 'cd resources/angular && ng test',
-        ]));
+        $this->withProgressBar([
+            fn () => File::ensureDirectoryExists(resource_path('views/generated')),
+            fn () => File::put(resource_path('views/generated/.gitkeep'), ''),
+            fn () => static::updateNodeScripts(fn (array $scripts) => array_merge($scripts, [
+                'ng:dev' => 'cd resources/angular && npm run build -- --configuration development && cd - && cp public/angular/index.html resources/views/generated/angular.blade.php',
+                'ng:watch' => 'npm run ng:dev && cd resources/angular && npm run build -- --configuration development --watch',
+                'ng:prod' => 'cd resources/angular && npm run build && cd - && cp public/angular/index.html resources/views/generated/angular.blade.php',
+                'ng:test' => 'cd resources/angular && ng test',
+            ])),
+        ], fn($action) => $action());
+
+        $this->newLine(2);
     }
 
     protected static function updateNodeScripts(callable $callback)

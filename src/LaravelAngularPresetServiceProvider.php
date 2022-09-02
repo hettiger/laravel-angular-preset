@@ -19,6 +19,7 @@ class LaravelAngularPresetServiceProvider extends PackageServiceProvider
             ->name('laravel-angular-preset')
             ->hasConfigFile()
             ->hasViews()
+            ->hasRoutes('web')
             ->hasMigration('create_laravel-angular-preset_table')
             ->hasCommand(LaravelAngularPresetCommand::class);
     }
