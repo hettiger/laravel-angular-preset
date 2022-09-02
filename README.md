@@ -1,6 +1,3 @@
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
-
 # Laravel Angular Frontend Preset
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/hettiger/laravel-angular-preset.svg?style=flat-square)](https://packagist.org/packages/hettiger/laravel-angular-preset)
@@ -8,15 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/hettiger/laravel-angular-preset/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/hettiger/laravel-angular-preset/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/hettiger/laravel-angular-preset.svg?style=flat-square)](https://packagist.org/packages/hettiger/laravel-angular-preset)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-angular-preset.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-angular-preset)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+Integrates Angular into a Laravel Application. Works on Laravel Vapor.
 
 ## Installation
 
@@ -26,38 +15,19 @@ You can install the package via composer:
 composer require hettiger/laravel-angular-preset
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-angular-preset-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="laravel-angular-preset-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-angular-preset-views"
-```
-
 ## Usage
 
-```php
-$laravelAngularPreset = new Hettiger\LaravelAngularPreset();
-echo $laravelAngularPreset->echoPhrase('Hello, Hettiger!');
+Execute the following commands:
+
+```bash
+php artisan laravel-angular-preset:install
+npm run ng:dev
 ```
+
+View your app in the web browser. Angular should be up and running at this point.
+Your Angular app lives under `resources/angular`. Start adding components and enjoy.
+
+See `package.json` for more scripts starting with the prefix `ng:`.
 
 ## Testing
 
