@@ -14,6 +14,7 @@ class LaravelAngularPresetCommand extends Command
     {
         $this->installAngular();
         $this->configureAngular();
+        $this->addNodeScripts();
 
         $this->comment('All done');
 
@@ -54,5 +55,40 @@ class LaravelAngularPresetCommand extends Command
         ], fn ($action) => $action());
 
         $this->newLine(2);
+    }
+
+    protected function addNodeScripts()
+    {
+        $this->info('Adding convenience Node / NPM scripts');
+
+        static::updateNodeScripts(fn (array $scripts) => array_merge($scripts, [
+            'ng:dev' => 'cd resources/angular && npm run build -- --configuration development && cd - && cp public/angular/index.html resources/views/angular.blade.php',
+            'ng:watch' => 'npm run ng:dev && cd resources/angular && npm run build -- --configuration development --watch',
+            'ng:prod' => 'cd resources/angular && npm run build && cd - && cp public/angular/index.html resources/views/angular.blade.php',
+            'ng:test' => 'cd resources/angular && ng test',
+        ]));
+    }
+
+    protected static function updateNodeScripts(callable $callback)
+    {
+        if (! file_exists(base_path('package.json'))) {
+            return;
+        }
+
+        $configurationKey = 'scripts';
+
+        $packages = json_decode(file_get_contents(base_path('package.json')), true);
+
+        $packages[$configurationKey] = $callback(
+            array_key_exists($configurationKey, $packages) ? $packages[$configurationKey] : [],
+            $configurationKey
+        );
+
+        ksort($packages[$configurationKey]);
+
+        file_put_contents(
+            base_path('package.json'),
+            json_encode($packages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT).PHP_EOL
+        );
     }
 }
