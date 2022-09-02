@@ -4,6 +4,7 @@ namespace Hettiger\LaravelAngularPreset\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use League\Flysystem\WhitespacePathNormalizer;
 
 class LaravelAngularPresetCommand extends Command
 {
@@ -16,6 +17,7 @@ class LaravelAngularPresetCommand extends Command
         $this->installAngular();
         $this->configureAngular();
         $this->addNodeScripts();
+        $this->addRoutesFile();
 
         $this->comment('All done');
 
@@ -39,8 +41,8 @@ class LaravelAngularPresetCommand extends Command
         $this->info('Configuring Angular in `resources/angular`');
 
         $this->withProgressBar([
-            fn () => copy(__DIR__.'/../../stubs/extra-webpack.config.js', resource_path('angular/extra-webpack.config.js')),
-            fn () => copy(__DIR__.'/../../stubs/index-html-transform.js', resource_path('angular/index-html-transform.js')),
+            fn () => File::copy(__DIR__.'/../../stubs/extra-webpack.config.js', resource_path('angular/extra-webpack.config.js')),
+            fn () => File::copy(__DIR__.'/../../stubs/index-html-transform.js', resource_path('angular/index-html-transform.js')),
 
             fn () => exec('cd resources/angular && npm i -D @angular-builders/custom-webpack'),
             fn () => exec('cd resources/angular && npm i -D dotenv dotenv-expand'),
@@ -74,6 +76,25 @@ class LaravelAngularPresetCommand extends Command
         ], fn ($action) => $action());
 
         $this->newLine(2);
+    }
+
+    protected function addRoutesFile()
+    {
+        $routesSourcePath = __DIR__.'/../../stubs/angular.php';
+        $routesTargetPath = 'routes/angular.php';
+        $pathNormalizer = resolve(WhitespacePathNormalizer::class);
+
+        $this->info('Adding routes to `'.$routesTargetPath.'`');
+
+        if (File::exists(base_path($routesTargetPath))) {
+            $this->error('File does already exist, please register the required routes yourself.');
+            $this->error('See: '.$pathNormalizer->normalizePath($routesSourcePath));
+            $this->newLine();
+
+            return;
+        }
+
+        File::copy($routesSourcePath, base_path($routesTargetPath));
     }
 
     protected static function updateNodeScripts(callable $callback)

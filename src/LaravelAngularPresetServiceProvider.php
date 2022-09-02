@@ -3,6 +3,7 @@
 namespace Hettiger\LaravelAngularPreset;
 
 use Hettiger\LaravelAngularPreset\Commands\LaravelAngularPresetCommand;
+use Illuminate\Support\Facades\File;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -19,8 +20,23 @@ class LaravelAngularPresetServiceProvider extends PackageServiceProvider
             ->name('laravel-angular-preset')
             ->hasConfigFile()
             ->hasViews()
-            ->hasRoutes('web')
             ->hasMigration('create_laravel-angular-preset_table')
             ->hasCommand(LaravelAngularPresetCommand::class);
+    }
+
+    public function boot()
+    {
+        $this->loadRoutes();
+
+        return parent::boot();
+    }
+
+    protected function loadRoutes()
+    {
+        $routesPath = base_path('routes/angular.php');
+
+        if (File::exists($routesPath)) {
+            $this->loadRoutesFrom($routesPath);
+        }
     }
 }
