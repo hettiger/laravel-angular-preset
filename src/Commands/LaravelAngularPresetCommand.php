@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Hettiger\LaravelAngularPreset\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelAngularPresetCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-angular-preset';
 
     public $description = 'My command';
 
