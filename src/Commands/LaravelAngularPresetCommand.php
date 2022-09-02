@@ -71,7 +71,7 @@ class LaravelAngularPresetCommand extends Command
                 'ng:prod' => 'cd resources/angular && npm run build && cd - && cp public/angular/index.html resources/views/generated/angular.blade.php',
                 'ng:test' => 'cd resources/angular && ng test',
             ])),
-        ], fn($action) => $action());
+        ], fn ($action) => $action());
 
         $this->newLine(2);
     }
