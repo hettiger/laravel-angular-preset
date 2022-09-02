@@ -13,6 +13,7 @@ class LaravelAngularPresetCommand extends Command
     public function handle(): int
     {
         $this->installAngular();
+        $this->configureAngular();
 
         $this->comment('All done');
 
@@ -24,8 +25,34 @@ class LaravelAngularPresetCommand extends Command
         $this->info('Installing Angular to `resources/angular`');
 
         $this->withProgressBar([
-            fn() => exec('npm install -D @angular/cli'),
-            fn() => exec('cd resources && ng new angular'),
-        ], fn($action) => $action());
+            fn () => exec('npm install -D @angular/cli'),
+            fn () => exec('cd resources && ng new angular'),
+        ], fn ($action) => $action());
+
+        $this->newLine(2);
+    }
+
+    protected function configureAngular()
+    {
+        $this->info('Configuring Angular in `resources/angular`');
+
+        $this->withProgressBar([
+            fn () => copy(__DIR__.'/../../stubs/extra-webpack.config.js', resource_path('angular/extra-webpack.config.js')),
+            fn () => copy(__DIR__.'/../../stubs/index-html-transform.js', resource_path('angular/index-html-transform.js')),
+
+            fn () => exec('cd resources/angular && npm i -D @angular-builders/custom-webpack'),
+            fn () => exec('cd resources/angular && npm i -D dotenv dotenv-expand'),
+            fn () => exec('cd resources/angular && npm i -D webpack'),
+
+            fn () => exec('cd resources/angular && ng config projects.angular.architect.build.builder "@angular-builders/custom-webpack:browser"'),
+            fn () => exec('cd resources/angular && ng config projects.angular.architect.serve.builder "@angular-builders/custom-webpack:dev-server"'),
+            fn () => exec('cd resources/angular && ng config projects.angular.architect.extract-i18n.builder "@angular-builders/custom-webpack:extract-i18n"'),
+            fn () => exec('cd resources/angular && ng config projects.angular.architect.test.builder "@angular-builders/custom-webpack:karma"'),
+            fn () => exec('cd resources/angular && ng config projects.angular.architect.build.options.customWebpackConfig.path "./extra-webpack.config.js"'),
+            fn () => exec('cd resources/angular && ng config projects.angular.architect.build.options.indexTransform "./index-html-transform.js"'),
+            fn () => exec('cd resources/angular && ng config projects.angular.architect.build.options.outputPath "../../public/angular"'),
+        ], fn ($action) => $action());
+
+        $this->newLine(2);
     }
 }
