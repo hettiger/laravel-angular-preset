@@ -14,6 +14,12 @@ class LaravelAngularPresetCommand extends Command
 
     public function handle(): int
     {
+        if (File::exists(resource_path('angular'))) {
+            $this->error('It seems like Angular has already been installed at `resources/angular`');
+
+            return self::FAILURE;
+        }
+
         $this->installAngular();
         $this->configureAngular();
         $this->addNodeScripts();
