@@ -2,9 +2,9 @@
 
 namespace Hettiger\LaravelAngularPreset\Tests;
 
+use Hettiger\LaravelAngularPreset\LaravelAngularPresetServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Hettiger\LaravelAngularPreset\LaravelAngularPresetServiceProvider;
 
 class TestCase extends Orchestra
 {

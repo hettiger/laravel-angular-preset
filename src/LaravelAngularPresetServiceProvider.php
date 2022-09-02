@@ -2,9 +2,9 @@
 
 namespace Hettiger\LaravelAngularPreset;
 
+use Hettiger\LaravelAngularPreset\Commands\LaravelAngularPresetCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Hettiger\LaravelAngularPreset\Commands\LaravelAngularPresetCommand;
 
 class LaravelAngularPresetServiceProvider extends PackageServiceProvider
 {
