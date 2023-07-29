@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 
 <!-- CHANGELOGGER -->
 
+## [v0.0.4] - 2023-07-29
+
+### Hotfix (1 change)
+
+- Add Laravel 10 Support
+
+
 ## [v0.0.3] - 2023-07-29
 
 ### Hotfix (1 change)
