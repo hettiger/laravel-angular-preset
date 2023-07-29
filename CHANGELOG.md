@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 
 <!-- CHANGELOGGER -->
 
+## [v0.0.3] - 2023-07-29
+
+### Hotfix (1 change)
+
+- Fix uses global ng and fails if the command is not found
+
+
 ## [v0.0.2] - 2022-09-02
 
 ### Bug fix (1 change)

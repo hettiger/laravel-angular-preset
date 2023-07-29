@@ -34,12 +34,9 @@ class LaravelAngularPresetCommand extends Command
     {
         $this->info('Installing Angular to `resources/angular`');
 
-        $this->withProgressBar([
-            fn () => exec('npm install -D @angular/cli'),
-            fn () => exec('cd resources && ng new angular'),
-        ], fn ($action) => $action());
+        exec('cd resources && npx @angular/cli new angular');
 
-        $this->newLine(2);
+        $this->newLine(1);
     }
 
     protected function configureAngular()
